@@ -1,0 +1,42 @@
+mode: test
+resume: false
+tag: wta
+verbose: true
+seed: 1234
+dataset:
+  train:
+    tfrecords: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_train_partial_66/
+    idxs: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_train_partial_66_idx/
+    batchsize: 2
+    limit_train_batches: 1.0
+    limit_val_batches: 0.5
+    val_check_interval: 0.25
+    log_every_n_steps: 100
+  valid:
+    tfrecords: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10/
+    idxs: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10_idx/
+    batchsize: 1
+  test:
+    tfrecords: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10/
+    idxs: /home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10_idx/
+    batchsize: 1
+    prediction_time: 3
+    ckpt_path: /home/paperspace/Dropbox/JQUAD/SceneTransformer-pytorch/outputs/2023-03-30/22-05-47/lightning_logs/version_0/checkpoints/epoch=9-step=149008.ckpt
+  halfwidth: 50
+  only_veh: true
+  hidden: MP
+viz:
+  width: 500
+model:
+  in_feat_dim: 9
+  feature_dim: 64
+  time_steps: 91
+  current_step: 10
+  in_dynamic_rg_dim: 3
+  in_static_rg_dim: 6
+  head_num: 8
+  k: 4
+  F: 6
+gpu_ids:
+- 0
+max_epochs: 100

@@ -1,0 +1,48 @@
+mode: 'test' # 'train' or 'validate' or 'test'
+resume: false # 'False' or path to checkpoint to resume training
+tag: 'wta'
+verbose: true
+seed: 1234
+
+dataset:
+  train:  # Used when mode is set to 'train'
+    tfrecords: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_train_partial_66/'     # Path to training tfrecords folder
+    idxs: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_train_partial_66_idx/'     # Path to training idxs folder
+    batchsize: 2      # Training batch_size
+    limit_train_batches: 1.0  # [0 - 1] Set the fraction of data to be used for training
+    limit_val_batches: 0.5    # [0 - 1] Set the fraction of data to be used for validation
+    val_check_interval: 0.25  # [0 - 1] Frequency of validation checks within an epoch
+    log_every_n_steps: 100    # Frequency of training log in terms of iteration number
+  valid:   # Used when mode is set to 'train'
+    tfrecords: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10/'     # Path to validation tfrecords folder
+    idxs: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10_idx/'      # Path to validation idxs folder
+    batchsize: 1
+  test:
+    tfrecords: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10/'     # Path to test tfrecords folder
+    idxs: '/home/paperspace/Dropbox/JQUAD/Data/waymo_motion/waymo_val_partial_10_idx/'      # Path to test idxs folder
+    batchsize: 1
+    prediction_time: 3 # [1 - 8] Future Prediction time window 
+    # Path to weight for testing
+    ckpt_path: '/home/paperspace/Dropbox/JQUAD/SceneTransformer-pytorch/outputs/2023-03-30/22-05-47/lightning_logs/version_0/checkpoints/epoch=9-step=149008.ckpt'
+
+  halfwidth: 50     # Data scaling during training
+  only_veh: true    # Only considers vehicles (based on the type of object)
+  hidden: 'MP'      # 'MP' or 'CMP' or 'GCMP' Used to select task specification (Motion Prediction/Conditional Motion Prediction/ Goal Conditioned Motion Prediction)
+
+viz:    #Visualization setting during validation
+  width: 500
+
+model:   # Model params
+  in_feat_dim: 9        # No. of input channels of agents
+  feature_dim: 64       # Feature dimension size of SceneTransformer
+  time_steps: 91        # No. of time steps per scene
+  current_step: 10      # Idx of the current time step 
+  in_dynamic_rg_dim: 3  # No. of input channels of Dynamic road graph elements
+  in_static_rg_dim: 6   # No. of input channels of Static road graph elements
+  head_num: 8           # No. of attention heads 
+  k: 4                  # Scaling factor for attention
+  F: 6                  # No. of possible futures
+
+gpu_ids: [0]            # ID's of GPUs to be used
+max_epochs: 100         # Maximum no. of epochs
+
