@@ -1,7 +1,9 @@
 # SceneTransformer 
+
+<img width="1010" alt="Screenshot 2023-11-05 at 5 27 57 PM" src="https://github.com/UdayBondi/scene-transformer-waymo/assets/34211620/67b10799-4a3a-4800-b0e4-147242c7e2e1">
+
+
 Link to the paper: (https://arxiv.org/abs/2106.08417)
-
-
 ## Environment Setup 
  
 1. Install conda (with python=3.10)
